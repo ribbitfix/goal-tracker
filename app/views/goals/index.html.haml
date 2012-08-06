@@ -13,10 +13,5 @@
 				%th Sat
 		%tbody
 			%tr
-				%td "yes"
-				%td "no"
-				%td "yes"
-				%td "no"
-				%td "yes"
-				%td "no"
-				%td ""
+			- Report.current_week(goal.id).each do |bool|
+				%td= bool
