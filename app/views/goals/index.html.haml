@@ -1,6 +1,6 @@
 %h1 Goals Summary
 - @goals.each do |goal|
-	%h2= goal.goal_name
+	%h2= link_to "#{goal.goal_name}", goal_path(goal)
 	%table
 		%thead
 			%tr
@@ -15,3 +15,4 @@
 			%tr
 			- Report.current_week(goal.id).each do |bool|
 				%td= bool
+= link_to "Submit report", new_report_path

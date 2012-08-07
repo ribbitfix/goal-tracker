@@ -1,0 +1,12 @@
+%h1 Submit a report
+= form_tag reports_path, :method => :post do
+	= date_select :report, :report_date
+	- @goals.each do |goal|
+		%div
+			- name = goal.goal_name
+			= name
+			= radio_button_tag(name, "true")
+			= label_tag("#{name}_true", "yes")
+			= radio_button_tag(name, "false")
+			= label_tag("#{name}_false", "no")
+	= submit_tag "submit"
