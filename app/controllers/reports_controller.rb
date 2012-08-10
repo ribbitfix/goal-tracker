@@ -4,6 +4,7 @@ class ReportsController < ApplicationController
 	end
 
 	def create
+		puts params
 		Goal.all.each { |goal| Report.create!(params[:report]) }
 		redirect_to goals_path
 	end
