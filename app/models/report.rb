@@ -5,7 +5,7 @@ class Report < ActiveRecord::Base
   belongs_to :goal
 
   def self.current_week(goal_key)
-  	reports = Report.where("report_date >= :this_sunday 
+    reports = Report.where("report_date >= :this_sunday 
   		and report_date <= :this_saturday 
   		and goal_id == :goal_id", 
   		:this_sunday => current_sunday(), 
@@ -16,16 +16,17 @@ class Report < ActiveRecord::Base
     bools
   end
 
-	def self.current_sunday
-		today = Date.today
-		day_of_week = today.wday  # wday returns the day of week (0-6, Sunday is zero).
-		sunday = today - day_of_week
-	end
+  def self.current_sunday
+    today = Date.today
+    day_of_week = today.wday  # wday returns the day of week (0-6, Sunday is zero).
+    sunday = today - day_of_week
+  end
 
-	def self.current_saturday
+  def self.current_saturday
     today = Date.today        # hmm,
     day_of_week = today.wday  # this stuff's redundant.
     diff = 6 - day_of_week
     saturday = today + diff
-	end
+  end
+  
 end
