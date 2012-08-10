@@ -92,6 +92,7 @@ Learned about form helpers here: http://guides.rubyonrails.org/form_helpers.html
 - Model object helpers don't: form_for, label, text_field
 - To create a single form where the user submits reports for all their goals, it looks like I need to use form_tag, because form_for is only for a single instance.
 - Radio buttons are created thusly:
+
 ```ruby
 radio_button_tag(:nameofbuttonset, "value")
 label_tag(:nameofbuttonset_value, "label text")
@@ -126,6 +127,7 @@ More on radio buttons in nested forms:
 
 ### 8/8
 (at the Lucky Lab)
+
 Changed the radio_button_tag arguments like so: ("report[#{name}]", "true")
 - which generated this HTML: ```<input id="report_meditate_true" type="radio" value="true" name="report[meditate]">```
 - and led to this error message: "ActiveModel::MassAssignmentSecurity::Error in ReportsController#create Can't mass-assign protected attributes: meditate, be in bed by 11, exercise"
@@ -146,6 +148,7 @@ Chuck says: if you need nested forms, it may be an indication that your data mod
 
 Also learned about scaffolding:
 - Used "rails g scaffold status report_id:integer goal_id:integer state:string" to create a whole bunch of files:
+```
 invoke  active_record
       create    db/migrate/20120809024102_create_statuses.rb
       create    app/models/status.rb
@@ -168,7 +171,7 @@ invoke  active_record
       create      app/assets/stylesheets/statuses.css.scss
       invoke  scss
       create    app/assets/stylesheets/scaffolds.css.scss
-
+```
 - Did rake db:migrate
 - Went into Gemfile and uncommented therubyracer; ran bundle to install it.
 - Quit and restarted the server, then went to http://localhost:3000/statuses

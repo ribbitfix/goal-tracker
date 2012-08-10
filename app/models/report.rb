@@ -23,7 +23,7 @@ class Report < ActiveRecord::Base
 	end
 
 	def self.current_saturday
-		today = Date.today        # hmm,
+    today = Date.today        # hmm,
     day_of_week = today.wday  # this stuff's redundant.
     diff = 6 - day_of_week
     saturday = today + diff
