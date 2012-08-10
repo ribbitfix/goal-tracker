@@ -148,36 +148,28 @@ Chuck says: if you need nested forms, it may be an indication that your data mod
 
 Also learned about scaffolding:
 - Used "rails g scaffold status report_id:integer goal_id:integer state:string" to create a whole bunch of files:
-```
-invoke  active_record
-      create    db/migrate/20120809024102_create_statuses.rb
-      create    app/models/status.rb
-       route  resources :statuses
-      invoke  scaffold_controller
-      create    app/controllers/statuses_controller.rb
-      invoke    erb
-      create      app/views/statuses
-      create      app/views/statuses/index.html.erb
-      create      app/views/statuses/edit.html.erb
-      create      app/views/statuses/show.html.erb
-      create      app/views/statuses/new.html.erb
-      create      app/views/statuses/_form.html.erb
-      invoke    helper
-      create      app/helpers/statuses_helper.rb
-      invoke  assets
-      invoke    coffee
-      create      app/assets/javascripts/statuses.js.coffee
-      invoke    scss
-      create      app/assets/stylesheets/statuses.css.scss
-      invoke  scss
-      create    app/assets/stylesheets/scaffolds.css.scss
-```
+	- DB migration
+	- status model, routes, controller, views, helper
+	- JS and CSS assets
 - Did rake db:migrate
 - Went into Gemfile and uncommented therubyracer; ran bundle to install it.
 - Quit and restarted the server, then went to http://localhost:3000/statuses
 - To get rid of the scaffold files: rails destroy scaffold status
 
 NEXT: git commit and start anew.
+
+### 8/10
+(at Jeff's house)
+
+Jeff recommends git flow, a plugin command line tool for git. Hotfix is its killer feature - allows you to fix a bug in one branch and apply it to all branches.
+
+Jeff says: display code should not be in the model. You could put it in the controller, but that's not great either. This is a common failure of MVC. A couple other options:
+- Model wrapper - queries the DB (this is maybe like helpers in rails?)
+- ViewModel - pass in objects
+
+In either case, you'd have, for example, a CalendarReport and a GraphReport wrapper or viewmodel.
+
+Form view: instead of radio buttons, you could have a single button for each goal, linked to hidden radio buttons with JS. OR! Better yet, don't even have a separate report screen - submit reports from the summary view, using AJAX.
 
 
 QUESTIONS
@@ -186,7 +178,9 @@ QUESTIONS
 TODO
 - Figure out how to add value constraints to DB columns in Rails (eg. Goal times_per_week - valid values are 1 thru 7)
 - Figure out time zone stuff - looks like the default is GMT. Will want to use the user's local time instead.
-- Check out http://www.lucidtracker.com/
+- Other goal trackers to check out:
+	- http://www.lucidtracker.com/
+	- MyChain android app
 
 NOTES FOR FUTURE VERSIONS
 - Will want to allow for inactive goals to remain in the user's history - deleting a goal should not remove the data already collected. (addressed this on 8/8 with Goal state attr)
