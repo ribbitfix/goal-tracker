@@ -1,6 +1,4 @@
 Goaltracker::Application.routes.draw do
-  resources :statuses
-
   resources :goals
   resources :reports
   root :to => redirect('/goals')

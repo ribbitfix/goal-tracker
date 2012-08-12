@@ -152,8 +152,8 @@ Also learned about scaffolding:
 	- status model, routes, controller, views, helper
 	- JS and CSS assets
 - Did rake db:migrate
-- Went into Gemfile and uncommented therubyracer; ran bundle to install it.
-- Quit and restarted the server, then went to http://localhost:3000/statuses
+- Went into Gemfile and uncommented therubyracer; ran bundle to install it. (This embeds the V8 JS interpreter into Ruby.)
+- Quit and restarted the server, then went to http://localhost:3000/statuses to see the magic in action.
 - To get rid of the scaffold files: rails destroy scaffold status
 
 NEXT: git commit and start anew.
@@ -164,23 +164,46 @@ NEXT: git commit and start anew.
 Jeff recommends git flow, a plugin command line tool for git. Hotfix is its killer feature - allows you to fix a bug in one branch and apply it to all branches.
 
 Jeff says: display code should not be in the model. You could put it in the controller, but that's not great either. This is a common failure of MVC. A couple other options:
-- Model wrapper - queries the DB (this is maybe like helpers in rails?)
-- ViewModel - pass in objects
+- Model wrapper - queries the DB (this is maybe like helpers or decorators in rails?)
+- ViewModel - pass in objects (presenter? See Igal's meetup notes here: https://groups.google.com/d/msg/pdxruby/pylgB7-KMwI/dwmsE5wXMmgJ)
 
 In either case, you'd have, for example, a CalendarReport and a GraphReport wrapper or viewmodel.
 
 Form view: instead of radio buttons, you could have a single button for each goal, linked to hidden radio buttons with JS. OR! Better yet, don't even have a separate report screen - submit reports from the summary view, using AJAX.
 
+### 8/11
+Poked around the scaffold files for a while, then removed them using "rails destroy scaffold status". Although the status-specific files and routes are gone, the code to create the statuses table is still in the schema, even after running rake db:migrate. (The scaffolds stylesheet is still there too.)
 
-QUESTIONS
+Created User model: 
+- rails g model User user_name:string
+- added "has_many :goals" and "has_many :reports" to model
+Created Status model:
+- rails g model Status goal_id:integer status:boolean report_id:integer
+- added "belongs_to :goal" and "belongs_to :report"
+
+Tried to run the migrations and they didn't work because the old statuses table still exists. Wrote a migration to drop it, then realized that wasn't going to work unless I deleted the previous migration. Did that, then realized what I should have done: rather than deleting the old status table, I could have just removed the state:string column and added a status:boolean column. Duh.
+
+Added state attr to Goal: 
+- rails g migration AddStateToGoals state:boolean
+- added :state to list of attrs in model
+
+Created statuses table; updated Report model and table to reflect the new data model.
+
+NEXT: 
+- The code in the Report model no longer makes sense - rework or get rid of it.
+- Build some basic views, play around with fullcalendar.js?
+
+
+### QUESTIONS
 - How to install debugger without breaking the server?
 
-TODO
+### TODO
 - Figure out how to add value constraints to DB columns in Rails (eg. Goal times_per_week - valid values are 1 thru 7)
 - Figure out time zone stuff - looks like the default is GMT. Will want to use the user's local time instead.
 - Other goal trackers to check out:
 	- http://www.lucidtracker.com/
 	- MyChain android app
 
-NOTES FOR FUTURE VERSIONS
+### NOTES FOR FUTURE VERSIONS
 - Will want to allow for inactive goals to remain in the user's history - deleting a goal should not remove the data already collected. (addressed this on 8/8 with Goal state attr)
+- Implement Jeff's suggestions from 8/10

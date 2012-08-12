@@ -1,9 +1,9 @@
-class CreateStatuses < ActiveRecord::Migration
+class CreateStatusesTable < ActiveRecord::Migration
   def change
     create_table :statuses do |t|
-      t.integer :report_id
+      t.boolean :status
       t.integer :goal_id
-      t.string :state
+      t.integer :report_id
 
       t.timestamps
     end
