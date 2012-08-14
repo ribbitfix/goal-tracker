@@ -181,24 +181,79 @@ Created Status model:
 - rails g model Status goal_id:integer status:boolean report_id:integer
 - added "belongs_to :goal" and "belongs_to :report"
 
-Tried to run the migrations and they didn't work because the old statuses table still exists. Wrote a migration to drop it, then realized that wasn't going to work unless I deleted the previous migration. Did that, then realized what I should have done: rather than deleting the old status table, I could have just removed the state:string column and added a status:boolean column. Duh.
+Tried to run the migrations and they didn't work because the old statuses table still exists. Wrote a migration to drop it, then realized that wasn't going to work unless I deleted the previous migration. Did that, then realized what I should have done: rather than deleting the old status table, I could have just updated it by removing the state:string column and adding a status:boolean column. Duh.
 
 Added state attr to Goal: 
 - rails g migration AddStateToGoals state:boolean
 - added :state to list of attrs in model
 
-Created statuses table; updated Report model and table to reflect the new data model.
+Created new statuses table; updated Report model and table to reflect the new data model.
 
 NEXT: 
 - The code in the Report model no longer makes sense - rework or get rid of it.
 - Build some basic views, play around with fullcalendar.js?
+
+### 8/12
+Learned about git add options:
+- -A - all
+- . - new and modified
+- -u - modified and deleted
+
+Added routes for users and statuses, and made root redirect to users.
+
+Oops: forgot to add user_id to Goal yesterday. Created and ran the migration, and updated the model.
+
+Created simple controller methods and views for User index and show.
+
+Learned about validations and added some to the Goal model.
+
+Realized I still don't know how to go about creating the Report form.
+
+NEXT:
+- Add validations to other models
+- Figure out the report form. Maybe these will help:
+	- http://blog.dominicsayers.com/2011/08/24/howto-create-a-simple-parent-child-form-in-rails-3-1/
+	- http://stackoverflow.com/questions/3499208/ruby-on-rails-building-a-child-with-default-values-when-its-parent-is-created
+
+### 8/13
+Learned about working with parent-child relationships:
+- If ```u = User.find 1```, ```u.goals``` will return all Goal objects where ```user_id == 1```
+- To create new child objects: ```u.goals.create!(:goal_name => "do stuff", :times_per_week => 7, :state => true)```
+- See also http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#M001316
+
+Changed name of Goal "state" attr to "active" using this method:
+```ruby
+def change
+	rename_column :table_name, :old_column, :new_column
+end
+```
+
+Wrote build_statuses method in Report model. In the console, did this:
+```ruby
+r=Report.new
+ => #<Report id: nil, report_date: nil, created_at: nil, updated_at: nil, user_id: nil> 
+r.statuses
+ => []
+```
+Realized build_statuses requires a user_id. So, tried this:
+```ruby
+s=Report.new(:user_id => 5)
+ => #<Report id: nil, report_date: nil, created_at: nil, updated_at: nil, user_id: 5> 
+s.statuses
+ => [] 
+```
+So maybe before_create is only called when create (or save) is called? Yes: tried Report.create, and it called build_statuses. But: still got an empty statuses array.
+
+Try calling build_statuses from ReportController "new" method instead?
+
+In the User "show" view, can I pass a params[:id] arg to new_report_view?
+
 
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
 
 ### TODO
-- Figure out how to add value constraints to DB columns in Rails (eg. Goal times_per_week - valid values are 1 thru 7)
 - Figure out time zone stuff - looks like the default is GMT. Will want to use the user's local time instead.
 - Other goal trackers to check out:
 	- http://www.lucidtracker.com/

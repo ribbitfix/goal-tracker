@@ -1,20 +1,16 @@
-# more_goals = [{:goal_name => "meditate", :times_per_week => 7},
-# 	{:goal_name => "be in bed by 11", :times_per_week => 5},
-# 	{:goal_name => "exercise", :times_per_week => 3}]
+users = [{:user_name => "foo"}, {:user_name => "bar"}]
 
-# Goal.send(:attr_accessible, :goal_name, :times_per_week)  # is this line is necessary?
+goals = [{:goal_name => "some goal", :times_per_week => 7, :state => true, :user_id => 5},
+	{:goal_name => "some other goal", :times_per_week => 5, :state => true, :user_id => 5},
+	{:goal_name => "another goal", :times_per_week => 3, :state => true, :user_id => 6},
+	{:goal_name => "a goal", :times_per_week => 4, :state => true, :user_id => 6}]
 
-# # more_goals.each do |goal|
-# # 	Goal.create!(goal)
-# # end
+# Goal.send(:attr_accessible, :goal_name, :times_per_week, :state, :user_id)  # is this line is necessary?
 
-# reports = [{:goal_id => 2, :goal_met => true, :report_date => "2012-08-05"},
-# 	{:goal_id => 3, :goal_met => true, :report_date => "2012-08-05"},
-# 	{:goal_id => 4, :goal_met => true, :report_date => "2012-08-05"}
-# ]
+users.each do |user|
+	User.create!(user)
+end
 
-# Report.send(:attr_accessible, :goal_id, :goal_met, :report_date)
-
-# reports.each do |report|
-# 	Report.create!(report)
-# end
+goals.each do |goal|
+ 	Goal.create!(goal)
+end

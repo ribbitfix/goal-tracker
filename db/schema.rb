@@ -11,14 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812012113) do
+ActiveRecord::Schema.define(:version => 20120814002425) do
 
   create_table "goals", :force => true do |t|
     t.string   "goal_name"
     t.integer  "times_per_week"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.boolean  "state"
+    t.boolean  "active"
+    t.integer  "user_id"
   end
 
   create_table "reports", :force => true do |t|

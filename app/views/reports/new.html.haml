@@ -1,18 +1,17 @@
 %h1 Submit a report
-= form_tag reports_path, :method => :post do
-	= date_select :report, :report_date
-	- @goals.each do |goal|
-		%div
-			- name = goal.goal_name
-			= name
-			= radio_button_tag("report[#{name}]", "true")
-			= label_tag("#{name}_true", "yes")
-			= radio_button_tag("report[#{name}]", "false")
-			= label_tag("#{name}_false", "no")
-	= submit_tag "submit"
+%ul
+- @statuses.each do |s|
+	%li= "Goal: #{Goal.find(s.goal_id).goal_name}"
 
-/ take 3
-/ form_for :user do |f|
-/ 	f.fields_for :goal do |g_f|
-
-/ 		g_f.fields_for :report do |r_f|
+/ /old form
+/ = form_tag reports_path, :method => :post do
+/ 	= date_select :report, :report_date
+/ 	- @goals.each do |goal|
+/ 		%div
+/ 			- name = goal.goal_name
+/ 			= name
+/ 			= radio_button_tag("report[#{name}]", "true")
+/ 			= label_tag("#{name}_true", "yes")
+/ 			= radio_button_tag("report[#{name}]", "false")
+/ 			= label_tag("#{name}_false", "no")
+/ 	= submit_tag "submit"

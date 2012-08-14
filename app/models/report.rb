@@ -1,8 +1,21 @@
 require 'date'
 
 class Report < ActiveRecord::Base
-  attr_accessible :user_id :report_date
+  attr_accessible :user_id, :report_date
   belongs_to :user
+  has_many :statuses
+
+  #before_create :build_statuses
+
+  #private
+
+  def build_statuses
+    user = User.find self.user_id
+    goals = user.goals
+    goals.each do |goal|
+      goal.statuses.build
+    end
+  end
 
   # # Some or all of this code is probably going away.
   # def self.current_week(goal_key)

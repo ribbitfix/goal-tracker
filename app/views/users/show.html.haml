@@ -1,0 +1,6 @@
+%h1= "#{@user.user_name}'s goals"
+%ul
+	- @user.goals.each do |goal|
+		%li= "#{goal.goal_name}"
+		
+= link_to 'Submit a report', new_report_path(:id => @user.id)
