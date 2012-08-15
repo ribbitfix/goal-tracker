@@ -248,6 +248,23 @@ Try calling build_statuses from ReportController "new" method instead?
 
 In the User "show" view, can I pass a params[:id] arg to new_report_view?
 
+Maybe look at these again:
+- http://stackoverflow.com/questions/2110857/creating-a-set-number-of-child-objects-from-a-parents-form
+- http://stackoverflow.com/questions/783584/ruby-on-rails-how-do-i-use-the-active-record-build-method-in-a-belongs-to-rel
+
+### 8/14
+Learned about nested resources here: 
+- http://guides.rubyonrails.org/routing.html#nested-resources
+- http://weblog.jamisbuck.org/2007/2/5/nesting-resources
+
+An experiment:
+- Changed my routes: nested reports in users.
+- In my User "show" view, changed "Submit a report" path to new_user_report_path(@user)
+- When I click "Submit a report", there's a user_id in the params, hooray!
+
+So build_statuses is returning Goal objects, not Status objects. Fixed that. 
+
+Created new form. Getting the same security error as before. NEXT: Reproduce error and figure out how to fix it.
 
 
 ### QUESTIONS

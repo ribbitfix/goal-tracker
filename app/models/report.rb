@@ -10,11 +10,12 @@ class Report < ActiveRecord::Base
   #private
 
   def build_statuses
-    user = User.find self.user_id
-    goals = user.goals
+    goals = User.find(self.user_id).goals
+    statuses = []
     goals.each do |goal|
-      goal.statuses.build
+      statuses << goal.statuses.build(:report_id => self.id) # not sure if I need to specify :report_id here.
     end
+    statuses
   end
 
   # # Some or all of this code is probably going away.

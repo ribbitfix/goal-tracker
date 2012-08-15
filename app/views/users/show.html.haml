@@ -3,4 +3,4 @@
 	- @user.goals.each do |goal|
 		%li= "#{goal.goal_name}"
 		
-= link_to 'Submit a report', new_report_path(:id => @user.id)
+= link_to 'Submit a report', new_user_report_path(@user)

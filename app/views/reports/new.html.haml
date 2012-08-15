@@ -1,7 +1,15 @@
 %h1 Submit a report
-%ul
-- @statuses.each do |s|
-	%li= "Goal: #{Goal.find(s.goal_id).goal_name}"
+= form_tag user_reports_path, :method => :post do
+	= date_select :report, :report_date
+	- @statuses.each do |s|
+		%div
+			- name = Goal.find(s.goal_id).goal_name
+			= name
+			= radio_button_tag("status[#{name}]", "true")
+			= label_tag("#{name}_true", "yes")
+			= radio_button_tag("status[#{name}]", "false")
+			= label_tag("#{name}_false", "no")
+	= submit_tag "submit"
 
 / /old form
 / = form_tag reports_path, :method => :post do
