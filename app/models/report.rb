@@ -1,19 +1,17 @@
-require 'date'
+# require 'date'
 
 class Report < ActiveRecord::Base
-  attr_accessible :user_id, :report_date
+  attr_accessible :user_id, :report_date, :statuses_attributes
   belongs_to :user
   has_many :statuses
 
-  #before_create :build_statuses
-
-  #private
+  accepts_nested_attributes_for :statuses, :allow_destroy => true
 
   def build_statuses
     goals = User.find(self.user_id).goals
     statuses = []
     goals.each do |goal|
-      statuses << goal.statuses.build(:report_id => self.id) # not sure if I need to specify :report_id here.
+      statuses << goal.statuses.build(:report_id => self.id, :goal_id => goal.id)
     end
     statuses
   end

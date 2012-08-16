@@ -5,7 +5,8 @@ class ReportsController < ApplicationController
 	end
 
 	def create
+		@params = params[]
 		@report = Report.create!(params[:report])
-		@statuses = @report.statuses.create!(params[:status])
+		@statuses = @report.statuses.create!(params[:statuses])
 	end
 end

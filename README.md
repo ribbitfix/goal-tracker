@@ -266,6 +266,26 @@ So build_statuses is returning Goal objects, not Status objects. Fixed that.
 
 Created new form. Getting the same security error as before. NEXT: Reproduce error and figure out how to fix it.
 
+### 8/15
+Searched for info on accepts_nested_attribute_for; read these:
+- http://archives.ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
+- http://www.manas.com.ar/spalladino/2010/03/03/handling-children-with-accepts_nested_attributes_for-in-rails/
+- http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html
+
+Yesterday I tried using ```form_for @report``` but it didn't do the routing properly - reports_path no longer exists; it's now user_reports_path. Today it occurred to me that I maybe I could just specify the correct path, and indeed I can. Read about it here: http://stackoverflow.com/questions/2718059/nested-resources-in-namespace-form-for
+
+So. I'm back to creating a nested form, even though the point of Chuck's data model suggestions - if I understood correctly - was to avoid having to deal with nested forms. So apparently I'm doing something wrong here? But I don't know what else to try, so I'm just going to proceed. FILDI.
+
+Tried the form_for / fields_for approach but no statuses were created. Not sure why. Going back to yesterday's version of the form.
+
+What's showing up in my params right now is this: "statuses"=>{"some goal"=>"true", "some other goal"=>"false", "do stuff"=>"true"}. What the Status model actually wants to see is "status" => "true", but then I'm back to the problem of having one big set of radio buttons instead of multiple yes/no pairs. There's gotta be a way to make this work, but at this point I'm inclined to give up on radio buttons and try something else. Namely checkboxes.
+
+Maybe I need to use hidden_field_tag to pass the other params for statuses?
+
+OK, the checkboxes form is successfully creating ONE complete status. The ```params[:statuses]``` hash only contains one set of status attrs.
+
+TODO: look at these resources: http://guides.rubyonrails.org/form_helpers.html#building-complex-forms
+
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
