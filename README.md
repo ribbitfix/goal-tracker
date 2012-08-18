@@ -286,12 +286,33 @@ OK, the checkboxes form is successfully creating ONE complete status. The ```par
 
 TODO: look at these resources: http://guides.rubyonrails.org/form_helpers.html#building-complex-forms
 
+### 8/16
+(at SEPoCoNi)
+Trying one more version of the form.
+
+With help from Reid, I now have a form that creates multiple statuses. There are still problems, though:
+- An extra status object is created, with :status and :goal_id nil.
+- Report.user_id is nil
+
+OK, fixed stuff. Here's what I learned:
+- In Report#build_statuses, I had a sort of convoluted way of getting at goals: ```User.find(:user_id).goals``` Here's a prettier way to say it: ```self.user.goals```
+- In ReportsController#create, we tried several ways of assigning @report:
+	- ```@report = Report.create!(params[:report])``` - This led to a nil user_id, because although :user_id was present in params, it wasn't part of the :report hash.
+	- ```@report = Report.create!(:report_date => params[:report], :user_id => params[:user_id])``` - This took care of the user_id problem, but it led to the creation of only a single status per report.
+	- ```@report = @user.reports.create(params[:report])``` - This works, creating both the report and status objects.
+- Inside a form_for, you can access the current object by calling .object on the form builder
+
+NEXT:
+- Create flash message to indicate successful create action
+- Build forms for creating new users and goals
+
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
 
 ### TODO
 - Figure out time zone stuff - looks like the default is GMT. Will want to use the user's local time instead.
+- Will want to prevent users from submitting more than one report per day - validate uniqueness on date, and deal with error handling.
 - Other goal trackers to check out:
 	- http://www.lucidtracker.com/
 	- MyChain android app

@@ -5,8 +5,13 @@ class ReportsController < ApplicationController
 	end
 
 	def create
-		@params = params[]
-		@report = Report.create!(params[:report])
-		@statuses = @report.statuses.create!(params[:statuses])
+		@user = User.find(params[:user_id])
+
+		if @report = @user.reports.create(params[:report])
+			redirect_to user_path(@user)
+		else
+			render :action => :new
+		end
 	end
+	
 end

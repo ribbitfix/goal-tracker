@@ -8,10 +8,9 @@ class Report < ActiveRecord::Base
   accepts_nested_attributes_for :statuses, :allow_destroy => true
 
   def build_statuses
-    goals = User.find(self.user_id).goals
-    statuses = []
+    goals = self.user.goals
     goals.each do |goal|
-      statuses << goal.statuses.build(:report_id => self.id, :goal_id => goal.id)
+      statuses.build(:goal_id => goal.id)
     end
     statuses
   end

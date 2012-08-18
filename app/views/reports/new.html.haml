@@ -1,33 +1,9 @@
 %h1 Submit a report
-= form_tag user_reports_path, :method => :post do
-	= date_select :report, :report_date
-	- @statuses.each do |s|
+= form_for @report, :url => user_reports_path do |f|
+	= f.date_select :report_date
+	= f.fields_for :statuses do |s_f|
 		%div
-			- name = Goal.find(s.goal_id).goal_name
-			= check_box_tag "statuses[status]", "true"
-			= label_tag "statuses[status]", "#{name}"
-			= hidden_field_tag "statuses[goal_id]", "#{s.goal_id}"
+			= s_f.check_box :status
+			= s_f.label :status, s_f.object.goal.goal_name
+			= s_f.hidden_field :goal_id
 	= submit_tag "submit"
-
-/ = form_for @report, :url => user_reports_path do |f|
-/ 	= f.date_select :report_date
-/ 	= f.fields_for :statuses do |s_f|
-/ 		- name = Goal.find(:status.goal_id).goal_name
-/ 		= name
-/ 		= s_f.radio_button("#{name}", true)
-/ 		= s_f.label("#{name}_true", "yes")
-/ 		= s_f.radio_button("#{name}", "false")
-/ 		= s_f.label("#{name}_false", "no")
-/ 	= submit_tag "submit"
-
-/ = form_tag user_reports_path, :method => :post do
-/ 	= date_select :report, :report_date
-/ 	- @statuses.each do |s|
-/ 		%div
-/ 			- name = Goal.find(s.goal_id).goal_name
-/ 			= name
-/ 			= radio_button_tag("statuses[#{name}]", "true")
-/ 			= label_tag("#{name}_true", "yes")
-/ 			= radio_button_tag("statuses[#{name}]", "false")
-/ 			= label_tag("#{name}_false", "no")
-/ 	= submit_tag "submit"
