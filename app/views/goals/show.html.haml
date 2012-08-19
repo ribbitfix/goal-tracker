@@ -1,2 +1,4 @@
 %h1 Goal history: #{@goal.goal_name}
 %p (Eventually there will be a calendar here.)
+= link_to "Edit this goal", edit_goal_path(@goal)
+= link_to "Back to goals summary", user_path(@goal.user)

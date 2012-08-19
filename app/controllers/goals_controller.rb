@@ -7,4 +7,14 @@ class GoalsController < ApplicationController
 		id = params[:id]
 		@goal = Goal.find(id)
 	end
+
+	def new
+		#...
+	end
+
+	def edit
+		id = params[:id]
+		@goal = Goal.find(id)
+	end
+	
 end

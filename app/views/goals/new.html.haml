@@ -1,0 +1,5 @@
+%h1 Create a new goal
+
+= form_tag new_goal_path, :method => :put do
+	= render :partial => "goal_form"
+	= submit_tag "create goal"

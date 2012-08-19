@@ -306,6 +306,22 @@ NEXT:
 - Create flash message to indicate successful create action
 - Build forms for creating new users and goals
 
+### 8/18
+(in the air)
+The view wrapper (views/layouts/application.html) is an erb file - I'm wondering if I should scrap it and create a haml file instead, just for consistency's sake? Seems to work fine as is, though.
+
+Did the flash message thing:
+- Added a line to ReportsController#create: ```flash[:notice] = "Your report was submitted."```
+- Modified the wrapper view to display a flash message if present
+- Discovered there was already a line in the scaffolds stylesheet to make #notice text green; added a line to make #warning text red.
+- Added a ```flash[:warning]``` line to the create method.
+
+Created a partial goal_form and the "new" and "edit" forms that uses it.
+
+Tried to fix UsersController#show so that it only shows active goals, but my syntax is broken.
+
+QUESTION: What is the Ruby equivalent of try/catch?
+
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
@@ -313,6 +329,8 @@ NEXT:
 ### TODO
 - Figure out time zone stuff - looks like the default is GMT. Will want to use the user's local time instead.
 - Will want to prevent users from submitting more than one report per day - validate uniqueness on date, and deal with error handling.
+- If the user makes a mistake on a report, there should be a way to undo it - probably not by editing it, more like scrap it and start over.
+- The forms should probably have cancel buttons?
 - Other goal trackers to check out:
 	- http://www.lucidtracker.com/
 	- MyChain android app

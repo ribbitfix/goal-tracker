@@ -7,7 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+	<%- if flash[:notice] %>
+		<div class = "message", id = "notice">
+			<%= flash[:notice] %>
+		</div>
+	<%- elsif flash[:warning] %>
+		<div class = "message", id = "warning">
+			<%= flash[:warning] %>
+		</div>
+	<%- end %>
 <%= yield %>
 
 </body>

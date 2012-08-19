@@ -1,6 +1,7 @@
 %h1= "#{@user.user_name}'s goals"
 %ul
-	- @user.goals.each do |goal|
-		%li= "#{goal.goal_name}"
+	- @goals.each do |goal|
+		%li= link_to "#{goal.goal_name}", goal_path(goal)
 		
-= link_to 'Submit a report', new_user_report_path(@user)
+= link_to "Submit a report", new_user_report_path(@user)
+= link_to "Create a new goal", new_goal_path

@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
+		@goals = @user.goals # this doesn't work: .where("goals.active == true")
 	end
 
 end

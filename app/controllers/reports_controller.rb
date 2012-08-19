@@ -8,8 +8,10 @@ class ReportsController < ApplicationController
 		@user = User.find(params[:user_id])
 
 		if @report = @user.reports.create(params[:report])
+			flash[:notice] = "Your report was submitted."
 			redirect_to user_path(@user)
 		else
+			flash[:warning] = "There was a problem submitting your report. Please try again."
 			render :action => :new
 		end
 	end
