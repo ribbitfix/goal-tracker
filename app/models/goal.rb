@@ -8,4 +8,11 @@ class Goal < ActiveRecord::Base
   validates :times_per_week, :presence => true, :inclusion => {:in => 1..7}
   validates :active, :presence => true
 
+  after_initialize :set_active
+
+  def set_active
+  	self.active = true
+  end
+
+
 end

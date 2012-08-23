@@ -322,6 +322,52 @@ Tried to fix UsersController#show so that it only shows active goals, but my syn
 
 QUESTION: What is the Ruby equivalent of try/catch?
 
+### 8/19
+Tried accessing the new goal form and got this message: "Unknown action: The action 'update' could not be found for GoalsController." Renamed the "create" method to "update", and it works. (Why is this? Is it because of the partial goal_form?)
+ 
+However! When I try to create a new goal using the form, I get a validation error: active can't be blank. Which reminds me, I need to:
+- Figure out how to set default values for new objects
+- Handle other validation errors
+
+Created new user form.
+
+Figured out at least one of the problems with new goal creation. In the view I had this: ```form_tag new_goal_path, :method => :put do``` which I replaced with this: ```form_tag "/goals", :method => :post do```
+
+Updating goals is working now - still having trouble with creating.
+
+### 8/21
+(at Ruby Newbies)
+
+In the User model, I added :goals_attributes to the attr_accessible line, and also ```accepts_nested_attributes_for :goals``` 
+
+I still wasn't getting :user_id passed to the new goal form, and I was going to try nesting the :goals resources inside :users like I did with :reports, but Don suggested adding an argument to new_goal_path in the User "show" view to pass the user_id value to the form. This works! I think nesting would have worked too, and I'm not sure which is a better solution. As is, the URL ends with "goals/new?user_id=7", whereas with nested resources it would be "users/7/goals/new", which feels a little cleaner to me (and could be made more meaningful to the user by replacing their id with their username). 
+
+Set a default value for :active by adding the following code to the Goal model:
+```ruby
+after_initialize :set_active
+
+def set_active
+	self.active = true
+end
+```
+
+### 8/22
+Tried archiving a goal using the edit form, and it failed. Got the following error in the server output: "Could not determine content-length of response body. Set content-length of the response or set Response#chunked = true." I googled it, and based on [the Stack Overflow conversation,](http://stackoverflow.com/questions/9612618/warn-could-not-determine-content-length-of-response-body-set-content-length-of) it seems like this error is unrelated to the update failure.
+
+Tried changing the times_per_week value and the goal name using the edit form, and both worked. So I'm wondering if there's something wrong with the edit form, which is where the :active checkbox lives (as opposed to the other attrs, which are on the partial form).
+
+Googled "rails update failure" and read this: http://www.sofer.com/blog/updating-attributes-in-rails.html
+
+Tried adding this to the update method in GoalsController:
+```ruby
+elsif @goal.update_column(:active, params[:goal][:active])
+	flash[:notice] = "Your goal was updated."
+	redirect_to user_path(@goal.user) 
+```
+This appeared to work in the browser, but I checked the value in the console, and it hadn't changed. And indeed, looking at the server output, I see the transaction was rolled back, even though all the required info is there in the params.
+
+NEXT: either figure this out or go play with fullcalendar.js.
+
 
 ### QUESTIONS
 - How to install debugger without breaking the server?

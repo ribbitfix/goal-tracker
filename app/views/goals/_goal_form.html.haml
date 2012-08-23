@@ -1,5 +1,7 @@
 = label :goal, :goal_name, "Goal name"
-= text_field :goal, :goal_name #, @goal.goal_name
+= text_field :goal, :goal_name
 
 = label :goal, :times_per_week, "How many times per week?"
-= select :goal, :times_per_week, [1, 2, 3, 4, 5, 6, 7] #, @goal.times_per_week
+= select :goal, :times_per_week, [1, 2, 3, 4, 5, 6, 7]
+
+= hidden_field :goal, :user_id

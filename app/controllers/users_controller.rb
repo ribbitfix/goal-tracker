@@ -9,4 +9,13 @@ class UsersController < ApplicationController
 		@goals = @user.goals # this doesn't work: .where("goals.active == true")
 	end
 
+	def new
+		@user = User.new
+	end
+
+	def create
+		@user = User.create!(params[:user])
+		redirect_to user_path(@user)
+	end
+
 end
