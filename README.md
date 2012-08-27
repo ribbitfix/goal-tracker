@@ -368,6 +368,13 @@ This appeared to work in the browser, but I checked the value in the console, an
 
 NEXT: either figure this out or go play with fullcalendar.js.
 
+### 8/26
+Decided to nest :goals inside :users resources; ran rake routes to verify that it did what I was expecting. Changed the relevant paths and controller methods but was getting weird behaviors:
+- user ids where goal ids should be and vice versa
+- one goal object had different times_per_week value depending on how I accessed it in the console: in the user.goals list, it had the original value; but when accessed via Goal.find, it had the updated value.
+
+Wiped the database and created all new objects through the UI. Seems like things are working now. EXCEPT: updating goal.active still isn't working.
+
 
 ### QUESTIONS
 - How to install debugger without breaking the server?

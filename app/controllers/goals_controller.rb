@@ -6,14 +6,15 @@ class GoalsController < ApplicationController
 	end
 
 	def new
+		@user = User.find(params[:user_id])
 		@goal = Goal.new(:user_id => params[:user_id])
 	end
 
 	def create
-		@user = User.find(params[:goal][:user_id])
-		if @goal = @user.goals.create!(params[:goal])
+		@user = User.find(params[:user_id])
+		if @goal = @user.goals.create(params[:goal])
 			flash[:notice] = "Your goal was successfully created."
-			redirect_to user_path(@goal.user)
+			redirect_to user_path(@user)
 		else
 			render "new"
 		end

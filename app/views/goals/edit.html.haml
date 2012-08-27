@@ -1,6 +1,6 @@
 %h1= "Edit goal: #{@goal.goal_name}"
 
-= form_tag goal_path(@goal), :method => :put do
+= form_tag user_goal_path(@goal), :method => :put do
 	= render :partial => "goal_form"
 
 	= label :goal, :active, "Uncheck to archive this goal"

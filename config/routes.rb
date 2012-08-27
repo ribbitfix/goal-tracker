@@ -1,8 +1,9 @@
 Goaltracker::Application.routes.draw do
   resources :users do
     resources :reports
+    resources :goals
   end
-  resources :goals
+  
   resources :statuses
   root :to => redirect('/users')
   # The priority is based upon order of creation:
