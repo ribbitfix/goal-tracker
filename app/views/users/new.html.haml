@@ -1,6 +1,22 @@
+%h1 Sign Up
+
 = form_for @user do |f|
 
-	= f.label :user_name, "Choose a username:"
-	= f.text_field :user_name
+	.field
+		= f.label :user_name, "Choose a username"
+		= f.text_field :user_name
 
-	= submit_tag "submit"
+	.field
+		= f.label :email
+		= f.text_field :email
+
+	.field
+		= f.label :password, "Create a password"
+		= f.password_field :password
+
+	.field
+		= f.label :password_confirmation
+		= f.password_field :password_confirmation
+
+
+	.actions= submit_tag "submit"

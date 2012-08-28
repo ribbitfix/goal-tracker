@@ -1,8 +1,8 @@
 %h1= "#{@user.user_name}'s goals"
 %ul
 	- @goals.each do |goal|
-		%li= link_to "#{goal.goal_name}", user_goal_path(@user, goal)
-		= link_to "Edit", edit_user_goal_path(@user, goal)
+		%li= goal.goal_name
+		= link_to "edit", edit_user_goal_path(@user, goal)
 		
 - if @user.goals.length > 0
 	= link_to "Submit a report", new_user_report_path(@user)

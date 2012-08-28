@@ -375,15 +375,42 @@ Decided to nest :goals inside :users resources; ran rake routes to verify that i
 
 Wiped the database and created all new objects through the UI. Seems like things are working now. EXCEPT: updating goal.active still isn't working.
 
+### 8/27
+Looking at calendar options. I think I'll stick with my original approach to displaying the current week for each goal, and then have just one calendar with a user's entire history.
+
+But first: authentication! How hard could it be? Watched this: http://railscasts.com/episodes/270-authentication-in-rails-3-1 and did this:
+- Reset the DB
+- Created and ran a migration to add columns to users: email:string, password_digest:string
+- Added code to the User model: a call to has_secure_password and a validation for its presence
+- Updated the User new view to include the new fields
+- Fired up the server to have the look at the new view and got this error: "bcrypt-ruby is not part of the bundle. Add it to Gemfile." It's needed for has_secure_password, and is already listed in Gemfile - I just had to uncomment it and run bundle.
+- Added some validations to the User model.
+- Created login form - sessions/new.html.haml
+- Created SessionsController
+- Added a current_user helper method to ApplicationController - I assume I'll need to change code elsewhere to make use of it?
+- Learned about the T-square operator (||=) here: https://blogs.oracle.com/prashant/entry/the_ruby_t_square_operator
+
+A bit of reorganizing: 
+- got rid of users index view - made the sign-in page the root view
+- got rid of goals show view, updated user show view so it doesn't link to nonexistent goal view
+
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
+- What's the deal with not being able to update a goal's active value?
 
 ### TODO
 - Figure out time zone stuff - looks like the default is GMT. Will want to use the user's local time instead.
 - Will want to prevent users from submitting more than one report per day - validate uniqueness on date, and deal with error handling.
 - If the user makes a mistake on a report, there should be a way to undo it - probably not by editing it, more like scrap it and start over.
 - The forms should probably have cancel buttons?
+- DRY out controller code like this:
+```ruby
+before_filter :get_object, :only => [:actions, :that, :need, :it]
+def get_object
+	@object = ObjectClass.find(params[:id])
+end
+```
 - Other goal trackers to check out:
 	- http://www.lucidtracker.com/
 	- MyChain android app

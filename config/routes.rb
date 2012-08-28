@@ -5,7 +5,8 @@ Goaltracker::Application.routes.draw do
   end
   
   resources :statuses
-  root :to => redirect('/users')
+  resources :sessions
+  root :to => redirect('/sessions/new')
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

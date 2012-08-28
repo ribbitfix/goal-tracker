@@ -1,10 +1,5 @@
 class GoalsController < ApplicationController
 	
-	def show
-		id = params[:id]
-		@goal = Goal.find(id)
-	end
-
 	def new
 		@user = User.find(params[:user_id])
 		@goal = Goal.new(:user_id => params[:user_id])
@@ -24,6 +19,7 @@ class GoalsController < ApplicationController
 		@goal = Goal.find(params[:id])
 	end
 
+	# this needs fixing
 	def update
 		@goal = Goal.find(params[:id])
 		if @goal.update_attributes(params[:goal])
