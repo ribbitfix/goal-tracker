@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
-		@goals = @user.goals # this doesn't work: .where("goals.active == true")
+		@goals = @user.goals # should display active goals only, but this doesn't work: .where("goals.active == true")
 	end
 
 	def new

@@ -1,3 +1,5 @@
+require "date"
+
 class Goal < ActiveRecord::Base
   attr_accessible :goal_name, :times_per_week, :active, :user_id
   
@@ -14,5 +16,39 @@ class Goal < ActiveRecord::Base
   	self.active = true
   end
 
+  def current_week_statuses #MAKE THIS WORK
+    bools = []
+    current_week_reports.each do |report|
+      statuses = report.statuses
+      statuses.each do |status|
+        if status.goal_id == self.id
+          bools << status.status
+        end
+      end
+    end
+    bools
+  end
+
+  private
+
+  def current_sunday
+    today = Date.today
+    day_of_week = today.wday  # wday returns the day of week (0-6, Sunday is zero).
+    sunday = today - day_of_week
+  end
+
+  def current_saturday
+    today = Date.today        # hmm,
+    day_of_week = today.wday  # this stuff's redundant.
+    diff = 6 - day_of_week
+    saturday = today + diff
+  end
+
+  def current_week_reports
+    reports = Report.where("report_date >= :this_sunday 
+      and report_date <= :this_saturday", 
+      :this_sunday => current_sunday(), 
+      :this_saturday => current_saturday() )
+  end
 
 end

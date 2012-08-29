@@ -394,6 +394,13 @@ A bit of reorganizing:
 - got rid of users index view - made the sign-in page the root view
 - got rid of goals show view, updated user show view so it doesn't link to nonexistent goal view
 
+### 8/28
+Tried moving current week display logic into UserController but couldn't figure out how to make that work. Putting it in the Goal model instead, so I can call a goal method from the view (even though I know that's bad practice).
+
+Got it working, insofar as it can, but the whole thing needs rethinking. I need to keep the booleans associated with their dates.
+
+
+TODO: rename Status.status to .goal_met 
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
@@ -404,7 +411,9 @@ A bit of reorganizing:
 - Will want to prevent users from submitting more than one report per day - validate uniqueness on date, and deal with error handling.
 - If the user makes a mistake on a report, there should be a way to undo it - probably not by editing it, more like scrap it and start over.
 - The forms should probably have cancel buttons?
+- At some point I should probably get more specific in routes.rb so I'm only creating the routes I'm actually using?
 - DRY out controller code like this:
+
 ```ruby
 before_filter :get_object, :only => [:actions, :that, :need, :it]
 def get_object

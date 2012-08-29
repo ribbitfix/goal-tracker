@@ -1,8 +1,21 @@
 %h1= "#{@user.user_name}'s goals"
-%ul
-	- @goals.each do |goal|
-		%li= goal.goal_name
-		= link_to "edit", edit_user_goal_path(@user, goal)
+
+- @goals.each do |goal|
+	%table
+		%caption= "#{goal.goal_name}: #{goal.times_per_week} times per week"
+		%tr
+			%th Sun
+			%th Mon
+			%th Tues
+			%th Wed
+			%th Thurs
+			%th Fri
+			%th Sat
+		%tr
+			- goal.current_week_statuses.each do |status|
+				%td= status
+
+	= link_to "edit this goal", edit_user_goal_path(@user, goal)
 		
 - if @user.goals.length > 0
 	= link_to "Submit a report", new_user_report_path(@user)

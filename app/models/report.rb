@@ -1,5 +1,3 @@
-# require 'date'
-
 class Report < ActiveRecord::Base
   attr_accessible :user_id, :report_date, :statuses_attributes
   belongs_to :user

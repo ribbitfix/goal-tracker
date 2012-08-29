@@ -3,7 +3,7 @@ class Status < ActiveRecord::Base
   belongs_to :goal
   belongs_to :report
 
-  def goal_name
+  def goal_name # This gets used in the report form
   	goal.goal_name
   end
 end
