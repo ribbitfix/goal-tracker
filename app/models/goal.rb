@@ -16,7 +16,10 @@ class Goal < ActiveRecord::Base
   	self.active = true
   end
 
-  def current_week_statuses #MAKE THIS WORK
+  # TODO: rewrite this stuff. As is, it's just passing an array of status booleans to the view,
+  # disassociated from their dates, so they're not displaying correctly. 
+
+  def current_week_statuses
     bools = []
     current_week_reports.each do |report|
       statuses = report.statuses

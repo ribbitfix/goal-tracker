@@ -399,8 +399,8 @@ Tried moving current week display logic into UserController but couldn't figure 
 
 Got it working, insofar as it can, but the whole thing needs rethinking. I need to keep the booleans associated with their dates.
 
+TODO: rename Status.status to .goal_met? 
 
-TODO: rename Status.status to .goal_met 
 
 ### QUESTIONS
 - How to install debugger without breaking the server?
@@ -412,17 +412,17 @@ TODO: rename Status.status to .goal_met
 - If the user makes a mistake on a report, there should be a way to undo it - probably not by editing it, more like scrap it and start over.
 - The forms should probably have cancel buttons?
 - At some point I should probably get more specific in routes.rb so I'm only creating the routes I'm actually using?
-- DRY out controller code like this:
+- Other goal trackers to check out:
+	- http://www.lucidtracker.com/
+	- MyChain android app
 
+DRY out controller code like this:
 ```ruby
 before_filter :get_object, :only => [:actions, :that, :need, :it]
 def get_object
 	@object = ObjectClass.find(params[:id])
 end
 ```
-- Other goal trackers to check out:
-	- http://www.lucidtracker.com/
-	- MyChain android app
 
 ### NOTES FOR FUTURE VERSIONS
 - Will want to allow for inactive goals to remain in the user's history - deleting a goal should not remove the data already collected. (addressed this on 8/8 with Goal state attr)
